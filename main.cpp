@@ -1,57 +1,30 @@
-#define NODE_COUNT 5
-
 #include <iostream>
-#include "warshall.h"
-
-char * read_matrix();
-void print_matrix(char* matr);
+#include "simple_graph.h"
 
 
 int main() {
-    char * matrix = read_matrix();
-    std::cout << "\n\nVISUALISATION OF ADJACENCY MATRIX:\n##################################\n\n" << std::endl;
-    print_matrix(matrix);
-    std::cout << "\n\nVISUALISATION OF TRANSITIVE HULL:\n#################################\n\n";
-    matrix = transitive_hull(matrix, NODE_COUNT);
-    print_matrix(matrix);
+    unsigned int node_count;
+    unsigned int selection;
 
-    return 0;
-}
+    std::cout << "How many nodes should your graph contain? Enter a value for unsigned int. (Max. 8 nodes)" << std::endl;
+    std::cin >> node_count;
+    do {
+        std::cout << "Enter what you want to use:\n\t1. Simple graph (connection based algorithms, no edges)\n\t2. Edge graph (edge based algorithms)" << std::endl;
+        std::cin >> selection;
 
-char * read_matrix() {
-    char* matrix = new char[NODE_COUNT];
-    for(int i = 0; i < NODE_COUNT; i++) {
-        matrix[i] = 0;
-        for(int j = 0; j < NODE_COUNT; j++) {
-            char input = 0;
-
-            std::cout << "Enter a value for the connection from " << i + 1 << " to " << j + 1 << " (0 for no connection, 1 for connection)" <<  std::endl;
-            std::cin >> input;
-            if(input == '1') {
-                char val = 1 << j;
-                matrix[i] = matrix[i] | val;
-            }
+        if(selection == 1) {
+            sgraph::simple_input(node_count);
         }
-    }
-    return matrix;
+        else if(selection == 2) {
+
+        } else {
+            std::cout << "\nInvalid input. Please try again.\n";
+        }
+
+    } while (selection != 1 && selection != 2);
+
+
+
+
 }
 
-void print_matrix(char * matr) {
-    std::cout << "    ";
-    for(int i = 0; i < NODE_COUNT; i++)
-        std::cout << i + 1 << " ";
-    std::cout << "\n";
-    for(int i = 0; i < NODE_COUNT; i++) {
-        std::cout << i + 1 << ":  ";
-        for(int j = 0; j < NODE_COUNT; j++) {
-            char differ = matr[i] & 1 << j;
-            if(differ != 0) {
-                std::cout << "1 ";
-            } else {
-                std::cout << "0 ";
-            }
-        }
-        std::cout << "\n";
-    }
-    std::cout << std::endl;
-}

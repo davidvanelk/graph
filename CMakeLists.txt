@@ -3,4 +3,4 @@ project(warshall)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(warshall main.cpp warshall.h)
+add_executable(warshall main.cpp warshall.h simple_graph.h edge_graph.h)
